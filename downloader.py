@@ -53,6 +53,9 @@ async def get_novel(session: aiohttp.ClientSession, nid: int = 14700041, php_ses
 
 async def scrape_novel(root, session, nid, php_sessid) :
     try :
+        dst = os.path.join(root, f'{nid}.json')
+        if os.path.exists(dst) :
+            return
         content, img_urls, cover_url = await get_novel(session = session, nid = nid, php_sessid = php_sessid)
         for k, v in img_urls.items() :
             if 'https://i.pximg.net/' in v :
